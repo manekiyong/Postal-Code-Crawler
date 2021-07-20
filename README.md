@@ -2,7 +2,7 @@
  
 ## Description
 This repository is to retrieve Postal Code & Coordinates information of addresses, based on [Data.gov.sg's Resale Flat Prices](https://data.gov.sg/dataset/resale-flat-prices) dataset, from OneMap API. <br/><br/>
-For example, given address `105 Potong Pasir Ave 1`, a request will be made to `https://developers.onemap.sg/commonapi/search?searchVal=105%20POTONG%20PASIR%20AVE%201&returnGeom=Y&getAddrDetails=Y&pageNum=1`, and information will be extracted and parsed into:
+For example, given address __105 Potong Pasir Ave 1__, a request will be made to `https://developers.onemap.sg/commonapi/search?searchVal=105%20POTONG%20PASIR%20AVE%201&returnGeom=Y&getAddrDetails=Y&pageNum=1`, and information will be extracted and parsed into:
 ```
 {
   "105%20POTONG%20PASIR%20AVE%201": {
@@ -14,11 +14,10 @@ For example, given address `105 Potong Pasir Ave 1`, a request will be made to `
 ```
 
 
-
 ## Usage
 Code is tested on Python 3.7.1. Other dependencies are stated in `requirements.txt`. Download the Resale Flat Prices dataset and save it in `.csv` format prior usage. 
-
-#### `InitialCrawl.py`
+#### <u>InitialCrawl.py</u>
+![InitialCrawlPreview](/Screenshot/InitialCrawl.png "Initial Crawl Preview")<br>
 This `.py` script is used to generate the postal code & coordinates from the first Resale Flat Price `.csv` file. <br/><br/>
 Run by executing `python InitialCrawl.py` on your python environment. An simple menu will guide you through the input of files. 
 * __Input__ (Files __must__ be in the same folder as `InitialCrawl.py`)
@@ -30,7 +29,8 @@ Run by executing `python InitialCrawl.py` on your python environment. An simple 
         * Output file name will be input file name + `-labeled` behind, e.g. ResalePriceDemo-labeled.csv
         * Entries without Postal Code found will be dropped.
     
-#### `SubsequentCrawl.py`
+#### <u>SubsequentCrawl.py</u>
+![Subsequent Crawl Preview](/Screenshot/SubsequentCrawl.png "Subsequent Crawl Preview")<br>
 This `.py` takes in 2 files; an unlabeled Resale Flat Price `.csv` file, and an Address Mapping `.json` file. If the postal code & coordinates of an address is found in the `.json` file, then it will be retrieved from there, otherwise, API calls to OneMap will be made to retrieve the missing postal code & coordinates. <br/><br/>
 Run by executing `python SubsequentCrawl.py` on your python environment. An simple menu will guide you through the input of files. 
 * __Input__ (Files __must__ be in the same folder as `SubsequentCrawl.py`)
@@ -42,6 +42,7 @@ Run by executing `python SubsequentCrawl.py` on your python environment. An simp
     * Resale flat price `.csv` file with coordinates & postal code appended.
         * Output file name will be input file name + `-labeled` behind, e.g. ResalePriceDemo-labeled.csv
         * Entries without Postal Code found will be dropped.
+        
         
 ## Pre-crawled dataset
 * 9075 Address-Postal Code Mapping entries
