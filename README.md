@@ -19,7 +19,7 @@ Code is tested on Python 3.7.1. Other dependencies are stated in `requirements.t
 #### <u>InitialCrawl.py</u>
 ![InitialCrawlPreview](/Screenshot/InitialCrawl.png "Initial Crawl Preview")<br>
 This `.py` script is used to generate the postal code & coordinates from the first Resale Flat Price `.csv` file. <br/><br/>
-Run by executing `python InitialCrawl.py` on your python environment. An simple menu will guide you through the input of files. 
+Run by executing `python InitialCrawl.py` on your python environment. A simple menu will guide you through the input of files. 
 * __Input__ (Files __must__ be in the same folder as `InitialCrawl.py`)
     * Resale flat price `.csv` file (Similar format to that of `ResalePriceDemo.csv`)
 * __Output__
@@ -32,7 +32,7 @@ Run by executing `python InitialCrawl.py` on your python environment. An simple 
 #### <u>SubsequentCrawl.py</u>
 ![Subsequent Crawl Preview](/Screenshot/SubsequentCrawl.png "Subsequent Crawl Preview")<br>
 This `.py` takes in 2 files; an unlabeled Resale Flat Price `.csv` file, and an Address Mapping `.json` file. If the postal code & coordinates of an address is found in the `.json` file, then it will be retrieved from there, otherwise, API calls to OneMap will be made to retrieve the missing postal code & coordinates. <br/><br/>
-Run by executing `python SubsequentCrawl.py` on your python environment. An simple menu will guide you through the input of files. 
+Run by executing `python SubsequentCrawl.py` on your python environment. A simple menu will guide you through the input of files. 
 * __Input__ (Files __must__ be in the same folder as `SubsequentCrawl.py`)
     * Resale flat price `.csv` file (Similar format to that of `ResalePriceDemo.csv`)
     * Address Mapping `.json` file (Similar format to that of `Pre-crawled/addressmap.json`)
@@ -40,7 +40,7 @@ Run by executing `python SubsequentCrawl.py` on your python environment. An simp
     * Address Map `.json` file (Example shown in `Pre-crawled/addressmap.json`, for future crawling use)
     * Address Map `.csv` file (Example shown in `Pre-crawled/addressmap.csv`, for immediate usage)
     * Resale flat price `.csv` file with coordinates & postal code appended.
-        * Output file name will be input file name + `-labeled` behind, e.g. ResalePriceDemo-labeled.csv
+        * Output file name will be input file name + `-labeled` behind, e.g. `ResalePriceDemo-labeled.csv`
         * Entries without Postal Code found will be dropped.
         
         

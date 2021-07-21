@@ -35,6 +35,7 @@ def requestAndParse(addr):
 
 def initialCrawl(df, outputFileName):
     uniqueAddr = []
+    noPostal=[]
     for i, row in df.iterrows():
         addr = parseAddr(row['block'], row['street_name'])
         uniqueAddr.append(addr)
@@ -45,7 +46,15 @@ def initialCrawl(df, outputFileName):
         print(i)
         temp_value=requestAndParse(i) # Get data from OneMap API & Process it
         temp_key[i]=temp_value
-        
+        if temp_value['Postal Code']=="":
+            noPostal.append(i)
+    noPostal = list(set(noPostal))
+    if(len(noPostal)>0):
+        print("\nThe following address have no postal code found:")
+        for i in noPostal:
+            print(i)
+        print("Consider manually adding them inside", outputFileName, "by using a text editor to search for the above keywords, if block still exists")
+
         
     with open(outputFileName, "w") as outfile: #Dump into addressmap.json
         json.dump(temp_key, outfile)

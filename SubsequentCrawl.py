@@ -7,6 +7,7 @@ import time
 import os
 
 def subsequentCrawl(df, loaded_json, outputFileName):
+    noPostal=[]
     unvisitedAddr = []
     print("Finding Existing Addr")
     for i, row in df.iterrows():
@@ -22,6 +23,16 @@ def subsequentCrawl(df, loaded_json, outputFileName):
         print(i)
         temp_value=requestAndParse(i)
         loaded_json[i]=temp_value
+        if temp_value['Postal Code']=="":
+            noPostal.append(i)
+
+    noPostal = list(set(noPostal))
+    if(len(noPostal)>0):
+        print("\nThe following address have no postal code found:")
+        for i in noPostal:
+            print(i)
+        print("Consider manually adding them inside", outputFileName, "by using a text editor to search for the above keywords, if block still exists")
+
     with open(outputFileName, "w") as outfile: #Dump into addressmap.json
         json.dump(loaded_json, outfile)    
     return loaded_json
