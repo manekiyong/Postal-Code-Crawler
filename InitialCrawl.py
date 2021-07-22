@@ -17,20 +17,25 @@ def requestAndParse(addr):
     data = requests.get("https://developers.onemap.sg/commonapi/search?searchVal="+addr+"&returnGeom=Y&getAddrDetails=Y&pageNum=1")
     time.sleep(0.245) # OneMap API limits to 250 calls per minute
     data = json.loads(data.text)
-    if data['found']==0:
-        temp_value['Longitude']=""
-        temp_value['Latitude']=""
-        temp_value['Postal Code']=str("")
-    else:
-        temp_value['Longitude']=data['results'][0]['LONGITUDE']
-        temp_value['Latitude']=data['results'][0]['LATITUDE']
-        if data['results'][0]['POSTAL']=='NIL': #If first result does not have postal code
-            if data['found']>1: #If there are more than 1 results
-                temp_value['Postal Code']=str(data['results'][1]['POSTAL'])
-            else: #Else, just leave postal code as blank.
+    temp_value['Longitude']=""
+    temp_value['Latitude']=""
+    temp_value['Postal Code']=str("")
+    if data['found']>0:
+        for res in data['results']:
+            block = addr.split("%20")[0]
+            if block[-1:].isalpha(): #Check if whether last char of block is a letter, if yes, remove it. (123A -> 123)
+                block = block[:-1]
+            block = f"{block:0>3}" #Zero-pad block number to 3 digit (i.e. Blk 23 -> 023)
+            curPostal = str(res['POSTAL'])
+            if len(curPostal)==6 and curPostal[-3:]==block:#Terminate if block number & last 3 digit of postal code matches
+                temp_value['Longitude']=res['LONGITUDE']
+                temp_value['Latitude']=res['LATITUDE']
+                temp_value['Postal Code']=curPostal
+                break
+            else:
+                temp_value['Longitude']=res['LONGITUDE']
+                temp_value['Latitude']=res['LATITUDE']
                 temp_value['Postal Code']=str("")
-        else:
-            temp_value['Postal Code']=str(data['results'][0]['POSTAL'])
     return temp_value
 
 def initialCrawl(df, outputFileName):
